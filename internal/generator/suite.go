@@ -113,7 +113,7 @@ func (b Body) BashString(withExit, retry bool) string {
 		}
 		sb.WriteString("\n")
 		if withExit {
-			sb.WriteString("[ ! $? = 0 ] && exit 1")
+			sb.WriteString("\t[ $? = 0 ] || exit 1\n")
 		}
 	}
 
