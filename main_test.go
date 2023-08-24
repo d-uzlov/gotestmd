@@ -19,6 +19,7 @@
 package main_test
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
@@ -124,9 +125,9 @@ func TestBashTest(t *testing.T) {
 }
 
 func TestBashRetry(t *testing.T) {
-	t.Cleanup(func() {
-		_ = os.RemoveAll("test-bash-examples")
-	})
+	// t.Cleanup(func() {
+	// 	_ = os.RemoveAll("test-bash-examples")
+	// })
 	runner, err := bash.New()
 	require.NoError(t, err)
 	defer runner.Close()
@@ -152,7 +153,9 @@ func TestBashRetry(t *testing.T) {
 	require.NoError(t, err)
 	require.Zero(t, exitCode)
 
-	stdout, _, exitCode, err := runner.Run("./test-bash-examples/retry/suite.gen.sh setup")
+	stdout, _, exitCode, err := runner.Run("echo $BASH_VERSION")
+	fmt.Println(stdout)
+	stdout, _, exitCode, err = runner.Run("./test-bash-examples/retry/suite.gen.sh setup")
 	require.NoError(t, err)
 	require.Zero(t, exitCode)
 	require.Contains(t, stdout, "attempt 2")
